@@ -8,6 +8,11 @@ function sendNumberVal(num) {
 
 	calculatorDisplay.textContent = displayVal === "0" ? num : displayVal + num;
 }
+function addDecimal() {
+	// if no decimal add one
+	if (!calculatorDisplay.textContent.includes("."))
+		calculatorDisplay.textContent = `${calculatorDisplay.textContent}.`;
+}
 
 // add event listner for number , operator , decimal
 inputBtns.forEach((e) => {
@@ -16,7 +21,7 @@ inputBtns.forEach((e) => {
 	else if (e.classList.contains("operator"))
 		e.addEventListener("click", () => sendNumberVal(e.value));
 	else if (e.classList.contains("decimal"))
-		e.addEventListener("click", () => sendNumberVal(e.value));
+		e.addEventListener("click", () => addDecimal());
 });
 
 // reset display
