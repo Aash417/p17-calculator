@@ -26,17 +26,36 @@ function addDecimal() {
 	if (!calculatorDisplay.textContent.includes("."))
 		calculatorDisplay.textContent = `${calculatorDisplay.textContent}.`;
 }
+
+// calculate first and sec value
+const calculate = {
+	"/": (firstNumber, secondNumber) => firstNumber / secondNumber,
+
+	"*": (firstNumber, secondNumber) => firstNumber * secondNumber,
+
+	"+": (firstNumber, secondNumber) => firstNumber + secondNumber,
+
+	"-": (firstNumber, secondNumber) => firstNumber - secondNumber,
+
+	"=": (firstNumber, secondNumber) => secondNumber,
+};
+
 function useOperator(operator) {
 	const currentValue = Number(calculatorDisplay.textContent);
+	// to prevent multiple operator
+	if (operatorValue && awaitingNextValue) {
+		operatorValue = operator;
+		return;
+	}
 	// assign first value if no value
 	if (!firstValue) firstValue = currentValue;
-	else console.log("currentValue ", currentValue);
+	else {
+		const calculation = calculate[operatorValue](firstValue, currentValue);
+		calculatorDisplay.textContent = calculation;
+	}
 
 	awaitingNextValue = true;
 	operatorValue = operator;
-
-	console.log("first value : ", firstValue);
-	console.log("operate value : ", operatorValue);
 }
 // add event listner for number , operator , decimal
 inputBtns.forEach((e) => {
